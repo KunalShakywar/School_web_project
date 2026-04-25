@@ -1,0 +1,12 @@
+.not-found-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.not-found-page__title {
+  margin: 0;
+  font-size: 1.875rem;
+  color: #dc2626;
+}

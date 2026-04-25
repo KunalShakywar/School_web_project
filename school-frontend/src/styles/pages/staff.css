@@ -1,0 +1,13 @@
+.staff-page {
+  padding: 7rem 1.25rem 1.25rem;
+}
+
+.staff-page__title {
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+}
