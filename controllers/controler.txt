@@ -1,2 +1,0 @@
-request , response logic ke liye 
-isko samjhna hai 

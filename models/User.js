@@ -26,11 +26,9 @@ const userSchema = new Schema({
     role: {
         type:String,
         enum: ["admin","student","teacher","parent"],
+        default: "student",
     },
-    createdAt:{
-        type:Date,
-        default:Date.now,
-    }
+
 });
 
 export default model("User",userSchema)

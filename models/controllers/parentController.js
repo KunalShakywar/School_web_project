@@ -1,17 +1,17 @@
 
-import User from "../models/User.js";
+import User from "../User.js";
 
-const getStudentId = async (req, res) => {
+const getParentId = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const teacherId = await User.findById(id);
+    const parentId = await User.findById(id);
 
-    if (!teacherId) {
+    if (!parentId) {
       return res.status(404).json({ message: "Teacher not found" });
     }
 
-    res.json(teacherId);
+    res.json(parentId);
 
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
@@ -19,4 +19,4 @@ const getStudentId = async (req, res) => {
   
 };
 
-export default getStudentId;
+export default getParentId;

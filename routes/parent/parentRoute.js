@@ -1,6 +1,6 @@
 
 import express from "express";
-import getParentId from "../../controllers/parentController.js";
+import getParentId from "../../models/controllers/parentController.js";
 
 const router = express.Router();
 
