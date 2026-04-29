@@ -8,7 +8,7 @@ const loginUser = async (req, res) => {
 
     // Validation of user
     if (!email || !password) {
-      return res.status(400).json({ message: "Sab fields bharo" });
+      return res.status(400).json({ message: "complate all fields" });
     }
 
     // Find user in database

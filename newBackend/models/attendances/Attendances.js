@@ -7,38 +7,38 @@ const attendanceSchema = new Schema(
       ref: "Student",
       required: true,
     },
+
+    classId: {
+      type: Schema.Types.ObjectId,
+      ref: "Class",
+      required: true,
+    },
+
+    teacherId: {
+      type: Schema.Types.ObjectId,
+      ref: "Teacher",
+      required: true,
+    },
+
     date: {
       type: Date,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["Present", "Absent"],
-      default: "Absent",
-    },
-    classId: {
-      type: Schema.Types.ObjectId,
-      ref: "Class",
-    },
-    name: String,
-    className: String,
-    subject: String,
-    teacherName: String,
-    teacherId: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-    teacherEmail: String,
-    teacherSubject: String,
+
+    remark: String,
+
     attendanceSessionId: {
       type: String,
       index: true,
     },
-    remark: String,
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
+);
+
+// Prevent duplicate attendance
+attendanceSchema.index(
+  { studentId: 1, date: 1, classId: 1 },
+  { unique: true }
 );
 
 export default model("Attendance", attendanceSchema);

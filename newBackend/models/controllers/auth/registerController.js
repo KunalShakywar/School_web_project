@@ -10,10 +10,14 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password, role, phone, subject, className, qualification } = req.body;
 
+    const cleanSubjects = Array.isArray(subject)
+      ? subject.filter((s) => s && trim() !== "")
+      :[];
+
     // Email already exist karta hai?
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already registered hai" });
+      return res.status(400).json({ message: "Email already registered" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,7 +37,7 @@ const registerUser = async (req, res) => {
         name: user.name,    // User se copy
         email: user.email,  // User se copy
         phone: phone || "",
-        subject: subject || "",
+        subject: cleanSubjects,
         qualification: qualification || "",
         className: className || "",
       });

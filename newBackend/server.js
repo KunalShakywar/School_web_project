@@ -10,6 +10,7 @@ import teacherRoute from './routes/teacher/teacherRoute.js'
 import attendanceRoute from './routes/attendance/Attendance.js'
 import curriculumRoute from './routes/curriculumRoute.js'
 import announcementRoute from './routes/announcementRoute.js'
+import otpRoute from './routes/otp/otpRoutes.js'
 
 dotenv.config();
 
@@ -36,6 +37,8 @@ app.use("/api/attendance",attendanceRoute)
 app.use("/api/curriculum", curriculumRoute)
 // announcements / news / notices
 app.use("/api/announcements", announcementRoute)
+// otp
+app.use("/api/otp", otpRoute)
 
 
 const startServer = async () => {
@@ -57,7 +60,6 @@ const startServer = async () => {
 };
 
 startServer();
-
 
 
 
