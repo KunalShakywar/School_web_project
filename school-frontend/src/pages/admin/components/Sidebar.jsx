@@ -19,6 +19,7 @@ const adminLinks = [
     icon: <IoHomeOutline size={18} />,
     className: "bg-blue-600 hover:bg-blue-700",
   },
+   
   {
     name: "Students",
     icon: <PiStudentBold size={18} />,
@@ -60,6 +61,7 @@ const adminLinks = [
       { name: "Curriculum", path: "/dashboard/curriculum" },
     ],
   },
+   { name: "Register", path: "/register" },
   {
     name: "Settings",
     icon: <IoSettingsOutline size={18} />,

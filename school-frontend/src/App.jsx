@@ -49,6 +49,8 @@ import AdminCurriculum from "./pages/admin/tabs/Academics/Curriculum"
 // Auth
 import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register"
+import ForgotView from "./pages/auth/components/forgot/ForgotView"
+import VerifyOtpView from "./pages/auth/components/forgot/VerifyOtpView"
 import ProtectedRoute from "./pages/auth/protect/ProtectedRoute"
 
 // Profiles
@@ -138,6 +140,8 @@ function Layout() {
           {/* ── Auth Routes ── */}
           <Route path="/login"    element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot"   element={<ForgotView />} />
+          <Route path="/verify-otp" element={<VerifyOtpView />} />
 
           {/* ── Protected Routes ── */}
           <Route element={<ProtectedRoute allowedRoles={["student"]} />}>

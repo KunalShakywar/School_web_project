@@ -65,6 +65,7 @@ export const quickActions = [
     icon: FiBookOpen,
     className: "bg-slate-700 hover:bg-slate-800",
   },
+  
 ];
 
 export const activityItems = [

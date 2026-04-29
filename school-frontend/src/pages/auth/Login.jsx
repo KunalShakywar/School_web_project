@@ -5,7 +5,6 @@ const Login = () => {
   const loginForm = useLoginForm();
 
   return (
-    <div className="pt-28">
     <LoginView
       email={loginForm.email}
       password={loginForm.password}
@@ -16,8 +15,7 @@ const Login = () => {
       onPasswordChange={loginForm.setPassword}
       onTogglePassword={() => loginForm.setShowPassword((prev) => !prev)}
       onSubmit={loginForm.handleLogin}
-      />
-      </div>
+    />
   );
 };
 

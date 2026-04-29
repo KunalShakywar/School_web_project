@@ -92,7 +92,7 @@ const TeacherProfileCard = ({ profile, teacherId }) => {
           </div>
 
           <div className="flex items-center justify-between border-t border-slate-100 px-5 py-3">
-            <span className="text-xs text-slate-400">ID: {displayId}</span>
+            <span className="text-xs text-slate-400">ID: {teacherEmail}</span>
             <div className="flex gap-1.5">
               <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
               <div className="h-1.5 w-1.5 rounded-full bg-green-500" />

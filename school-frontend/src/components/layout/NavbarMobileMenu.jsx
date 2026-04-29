@@ -27,9 +27,7 @@ const NavbarMobileMenu = ({
             {/* MAIN ITEM */}
             {link.dropdown ? (
               <button
-                onClick={() =>
-                  setOpenDropdown(isOpen ? null : link.name)
-                }
+                onClick={() => setOpenDropdown(isOpen ? null : link.name)}
                 className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
               >
                 <div className="flex items-center gap-2">
@@ -66,14 +64,9 @@ const NavbarMobileMenu = ({
 
             {/* DROPDOWN */}
             {link.dropdown && isOpen && (
-              <ul className="mt-1 ml-4 space-y-1 border-l border-slate-200 pl-3">
+              <ul className="mt-1 ml-4 space-y-1 border-l border-white pl-3">
                 {link.dropdown.map((item, index) => {
-                  const icons = [
-                    FiUser,
-                    FiUsers,
-                    FiBook,
-                    FiSettings,
-                  ];
+                  const icons = [FiUser, FiUsers, FiBook, FiSettings];
                   const SubIcon = item.icon || icons[index % icons.length];
 
                   return (

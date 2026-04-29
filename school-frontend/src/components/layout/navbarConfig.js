@@ -38,8 +38,9 @@ export const NAV_LINKS = [
 
 export const AUTH_LINKS = [
   { name: "Login", path: "/login", icon: GrUserAdmin },
-  { name: "Apply Now", path: "/contact", icon: VscGitStashApply },
-  { name: "Register", path: "/register" },
+  { name: " Get Started", path: "/contact", icon: VscGitStashApply },
+
+
   { name: "studentprofile", path: "/studentprofile" },
 ];
 

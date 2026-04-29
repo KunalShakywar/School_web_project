@@ -4,8 +4,8 @@ import "wc-menu-button";
 import Logo from "../../assets/rlogo.png";
 import { useAuth } from "../../pages/auth/context/AuthContext";
 import NavbarDesktopLinks from "./NavbarDesktopLinks";
-import NavbarMobileMenu from "./NavbarMobileMenu";
 import NavbarAuthMenu from "./NavbarAuthMenu";
+import NavbarMobileMenu from "./NavbarMobileMenu";
 import NavbarMobileAuthMenu from "./NavbarMobileAuthMenu";
 import { AUTH_LINKS, LOGIN_TRIGGER_ICON, NAV_LINKS } from "./navbarConfig";
 
@@ -14,9 +14,9 @@ const Navbar = ({ currentPath: currentPathProp, theme, setTheme }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = currentPathProp || location.pathname;
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMobileLoginOpen, setIsMobileLoginOpen] = useState(false);
   const loginMenuRef = useRef(null);
   const [sticky, setSticky] = useState(false);
@@ -75,8 +75,8 @@ const Navbar = ({ currentPath: currentPathProp, theme, setTheme }) => {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      setIsOpen(false);
       setIsLoginOpen(false);
+      setIsOpen(false);
       setIsMobileLoginOpen(false);
     }, 0);
 
@@ -116,7 +116,7 @@ const Navbar = ({ currentPath: currentPathProp, theme, setTheme }) => {
     <header
       className={`fixed left-1/2 -translate-x-1/2 ${
         sticky ? "top-0 w-full rounded-none" : "top-5 w-[90%] rounded-2xl"
-      } transition-all duration-300 ease-in-out bg-gradient-to-b from-blue-700 via-blue-800 to-gray-900 backdrop-blur-md shadow-lg z-50`}
+      } transition-all duration-300 ease-in-out bg-gradient-to-b   from-blue-700 via-blue-800 to-blue-500/50 backdrop-blur-md shadow-lg z-50`}
     >
       <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <NavLink
