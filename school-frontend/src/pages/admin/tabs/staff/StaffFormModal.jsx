@@ -72,13 +72,12 @@ function StaffFormModal({
           </label>
 
           <label className="space-y-1 text-sm text-gray-700 dark:text-gray-200">
-            Password
+            Password (optional)
             <input
               type="password"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              required={!editingId}
-              placeholder={editingId ? "Leave blank to keep same" : ""}
+              placeholder="Leave blank if not needed"
               className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-slate-800 dark:border-gray-700"
             />
           </label>

@@ -244,7 +244,7 @@ const ShowAttendance = () => {
   }, [visibleRows]);
 
   return (
-    <div className="min-h-screen px-3 pt-28 pb-6">
+    <div className="min-h-screen px-3 pb-6">
       <div className="mx-auto max-w-6xl space-y-4">
         <div className="flex items-center justify-between">
           <div>

@@ -172,7 +172,7 @@ function CollectStudentsAttendance() {
 
   if (role && role !== "teacher") {
     return (
-      <div className="px-4 pt-28">
+      <div className="px-4">
         <div className="mx-auto max-w-2xl rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-900">
           Attendance is available only for teacher logins.
         </div>
@@ -302,7 +302,7 @@ function CollectStudentsAttendance() {
       : ((totalPresent / totalStudents) * 100).toFixed(1);
 
   return (
-    <div className="px-4 pt-28">
+    <div className="px-4">
       <div>
         <AttendanceDashboardHeader statusMessage={statusMessage} />
 

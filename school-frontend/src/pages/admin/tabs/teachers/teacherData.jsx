@@ -35,5 +35,7 @@ export const initialTeacherForm = {
   email: "",
   password: "",
   phone: "",
+  className: "",
+  experience: "",
   photo: "",
 };

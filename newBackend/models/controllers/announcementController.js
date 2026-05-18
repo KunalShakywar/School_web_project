@@ -1,4 +1,5 @@
-import Announcement from "../announcements/Announcements.js";
+import Announcement from "../announcements/announcementModel.js";
+import { getSocketIO } from "../../config/socket.js";
 
 const normalizeStringList = (value) => {
   if (Array.isArray(value)) {
@@ -74,6 +75,12 @@ export const createAnnouncement = async (req, res) => {
 
     const announcement = await Announcement.create(payload);
 
+    getSocketIO()?.emit("announcements-updated", {
+      action: "created",
+      message: `New ${announcement.type} posted`,
+      announcement,
+    });
+
     res.status(201).json({ success: true, data: announcement });
   } catch (error) {
     console.error("createAnnouncement error:", error);
@@ -108,6 +115,12 @@ export const updateAnnouncement = async (req, res) => {
       });
     }
 
+    getSocketIO()?.emit("announcements-updated", {
+      action: "updated",
+      message: `${announcement.type === "news" ? "News" : "Notice"} updated`,
+      announcement,
+    });
+
     res.status(200).json({ success: true, data: announcement });
   } catch (error) {
     console.error("updateAnnouncement error:", error);
@@ -133,6 +146,12 @@ export const deleteAnnouncement = async (req, res) => {
       success: true,
       message: "Announcement deleted successfully",
       data: announcement,
+    });
+
+    getSocketIO()?.emit("announcements-updated", {
+      action: "deleted",
+      message: `${announcement.type === "news" ? "News" : "Notice"} deleted`,
+      announcement,
     });
   } catch (error) {
     console.error("deleteAnnouncement error:", error);

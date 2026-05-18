@@ -28,13 +28,13 @@ const NavbarMobileMenu = ({
             {link.dropdown ? (
               <button
                 onClick={() => setOpenDropdown(isOpen ? null : link.name)}
-                className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
               >
                 <div className="flex items-center gap-2">
                   {MainIcon ? (
-                    <MainIcon size={18} className="text-slate-600" />
+                    <MainIcon size={18} className="text-white/70" />
                   ) : (
-                    <FiHome size={18} className="text-slate-600" />
+                    <FiHome size={18} className="text-white/70" />
                   )}
 
                   <span>{link.name}</span>
@@ -50,12 +50,12 @@ const NavbarMobileMenu = ({
               <Link
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+                className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-white/85 transition hover:bg-white/10"
               >
                 {MainIcon ? (
-                  <MainIcon size={18} className="text-slate-600" />
+                  <MainIcon size={18} className="text-white/70" />
                 ) : (
-                  <FiHome size={18} className="text-slate-600" />
+                  <FiHome size={18} className="text-white/70" />
                 )}
 
                 <span>{link.name}</span>
@@ -64,7 +64,7 @@ const NavbarMobileMenu = ({
 
             {/* DROPDOWN */}
             {link.dropdown && isOpen && (
-              <ul className="mt-1 ml-4 space-y-1 border-l border-white pl-3">
+              <ul className="mt-1 ml-4 space-y-1 border-l border-white/10 pl-3">
                 {link.dropdown.map((item, index) => {
                   const icons = [FiUser, FiUsers, FiBook, FiSettings];
                   const SubIcon = item.icon || icons[index % icons.length];
@@ -72,14 +72,14 @@ const NavbarMobileMenu = ({
                   return (
                     <li key={item.name}>
                       <Link
-                        to={item.path}
-                        onClick={() => {
-                          setOpenDropdown(null);
-                          setIsOpen(false);
-                        }}
-                        className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                      to={item.path}
+                      onClick={() => {
+                        setOpenDropdown(null);
+                        setIsOpen(false);
+                      }}
+                        className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white"
                       >
-                        <SubIcon size={16} className="text-slate-500" />
+                        <SubIcon size={16} className="text-white/55" />
                         <span>{item.name}</span>
                       </Link>
                     </li>

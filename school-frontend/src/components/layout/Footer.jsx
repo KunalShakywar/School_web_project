@@ -2,12 +2,15 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer style={styles.footer} className="bg-gradient-to-t from-blue-700 via-blue-800 to-gray-900 backdrop-blur-md opacity-45 text-black dark:text-white">
+    <footer
+      style={styles.footer}
+      className="bg-gradient-to-b from-blue-700 via-blue-800 to-blue-500/50 text-white backdrop-blur-md dark:from-slate-950 dark:via-slate-900 dark:to-slate-800"
+    >
       <div style={styles.container}>
         
         {/* About */}
         <div>
-          <h3>About School</h3>
+          <h3 className="mb-3 text-lg font-semibold">About School</h3>
           <p>
             Bright Future Public School provides quality education with modern
             teaching methods. We focus on academics, discipline, and overall
@@ -17,7 +20,7 @@ const Footer = () => {
 
         {/* Contact */}
         <div>
-          <h3>Contact</h3>
+          <h3 className="mb-3 text-lg font-semibold">Contact</h3>
          
           <p>📞 +91 98765 43210</p>
           <p>✉️ info@brightfuture.edu.in</p>
@@ -25,7 +28,7 @@ const Footer = () => {
 
         {/* Links */}
         <div>
-          <h3>Quick Links</h3>
+          <h3 className="mb-3 text-lg font-semibold">Quick Links</h3>
           <ul style={styles.list}>
             <li>Home</li>
             <li>About</li>
@@ -36,7 +39,7 @@ const Footer = () => {
 
         {/* Notices */}
         <div>
-          <h3>Notices</h3>
+          <h3 className="mb-3 text-lg font-semibold">Notices</h3>
           <ul style={styles.list}>
             <li>Admissions Open 2026</li>
             <li>Sports Day – 15 April</li>
@@ -56,8 +59,8 @@ const Footer = () => {
 
 const styles = {
   footer: {
-    background: "",
-    padding: "30px 20px",
+    padding: "32px 20px 20px",
+    color: "white",
   },
   container: {
     display: "grid",
@@ -71,7 +74,7 @@ const styles = {
   bottom: {
     textAlign: "center",
     marginTop: "20px",
-    borderTop: "1px solid #444",
+    borderTop: "1px solid rgba(255,255,255,0.2)",
     paddingTop: "10px",
     fontSize: "14px",
   },

@@ -19,6 +19,10 @@ const useRegisterForm = () => {
   const [phone, setPhone] = useState("");
   const [parentName, setParentName] = useState("");
   const [parentPhone, setParentPhone] = useState("");
+  const [qualification, setQualification] = useState("");
+  const [subject, setSubject] = useState("");
+  const [className, setTeacherClassName] = useState("");
+  const [experience, setExperience] = useState("");
 
   const roleLabel = useMemo(() => getRoleLabel(activeRole), [activeRole]);
 
@@ -40,6 +44,13 @@ const useRegisterForm = () => {
           phone,
           parentName,
           parentPhone,
+        }),
+        ...(activeRole === "teacher" && {
+          qualification,
+          subject,
+          className,
+          phone,
+          experience,
         }),
       };
 
@@ -73,6 +84,10 @@ const useRegisterForm = () => {
     phone,
     parentName,
     parentPhone,
+    qualification,
+    subject,
+    className,
+    experience,
     roleLabel,
     setActiveRole,
     setShowPassword,
@@ -85,6 +100,10 @@ const useRegisterForm = () => {
     setPhone,
     setParentName,
     setParentPhone,
+    setQualification,
+    setSubject,
+    setTeacherClassName,
+    setExperience,
     handleRegister,
   };
 };

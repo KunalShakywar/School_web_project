@@ -72,7 +72,7 @@ const TeacherSpecial = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 pt-28">
+    <div className="min-h-screen p-4">
       <div className="mx-auto w-full max-w-6xl space-y-6 ">
         <div className="grid gap-4  rounded-3xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur md:grid-cols-[1fr_auto] md:items-center md:gap-6">
 

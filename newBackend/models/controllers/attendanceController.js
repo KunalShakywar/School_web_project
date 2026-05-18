@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Attendance from "../attendances/Attendances.js";
-import Student from "../students/Students.js";
+import Attendance from "../attendances/attendancesModel.js";
+import Student from "../students/studentsModel.js";
 
 const toDateOnly = (value) => {
   if (!value) return null;

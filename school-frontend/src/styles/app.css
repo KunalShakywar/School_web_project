@@ -6,8 +6,15 @@
 .app-main {
   width: 100%;
   min-height: 100vh;
-  padding: 0 1.5rem 3rem;
+  padding: 7rem 0 3rem;
   transition: opacity 300ms ease, transform 300ms ease;
+}
+
+@media (max-width: 767px) {
+  .app-main {
+    padding-top: 1rem;
+    padding-bottom: 7rem;
+  }
 }
 
 .app-main--visible {

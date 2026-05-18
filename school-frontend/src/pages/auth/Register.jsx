@@ -5,7 +5,7 @@ const Register = () => {
   const registerForm = useRegisterForm();
 
   return (
-    <div className="pt-28">
+    <div>
     <RegisterView
       roles={registerForm.roles}
       activeRole={registerForm.activeRole}
@@ -21,6 +21,10 @@ const Register = () => {
       phone={registerForm.phone}
       parentName={registerForm.parentName}
       parentPhone={registerForm.parentPhone}
+      qualification={registerForm.qualification}
+      subject={registerForm.subject}
+      className={registerForm.className}
+      experience={registerForm.experience}
       onRoleChange={registerForm.setActiveRole}
       onNameChange={registerForm.setName}
       onEmailChange={registerForm.setEmail}
@@ -32,6 +36,10 @@ const Register = () => {
       onPhoneChange={registerForm.setPhone}
       onParentNameChange={registerForm.setParentName}
       onParentPhoneChange={registerForm.setParentPhone}
+      onQualificationChange={registerForm.setQualification}
+      onSubjectChange={registerForm.setSubject}
+      onTeacherClassNameChange={registerForm.setTeacherClassName}
+      onExperienceChange={registerForm.setExperience}
       onSubmit={registerForm.handleRegister}
     />
     </div>

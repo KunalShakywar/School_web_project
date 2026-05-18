@@ -1,4 +1,4 @@
-import Student from "../students/Students.js";
+import Student from "../students/studentsModel.js";
 import User from "../User.js" // User model imported 
 
 // Filter

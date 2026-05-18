@@ -8,9 +8,13 @@ import { RiParentLine } from "react-icons/ri";
 import { PiStudentBold } from "react-icons/pi";
 import { FiBriefcase, } from "react-icons/fi";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
-import { FiBookOpen } from "react-icons/fi";
+import { BsDatabaseAdd } from "react-icons/bs";
 // Back Button
 import Backbtn from "../../../components/Backbtn";
+// context
+import {useAuth} from "../../auth/context/AuthContext"
+
+
 
 const adminLinks = [
   {
@@ -53,15 +57,12 @@ const adminLinks = [
     path: "/dashboard/announcements",
     className: "bg-violet-600 hover:bg-violet-700",
   },
-  {
-    name: "Academics",
-    icon: <FiBookOpen size={18} />,
-    className: "bg-pink-600 hover:bg-pink-700",
-    dropdown: [
-      { name: "Curriculum", path: "/dashboard/curriculum" },
-    ],
-  },
-   { name: "Register", path: "/register" },
+   { 
+    name: "Register",
+    icon: <BsDatabaseAdd size={18} />,
+    path: "/register",
+    className: "bg-gray-600 hover:bg-gray-700", },
+
   {
     name: "Settings",
     icon: <IoSettingsOutline size={18} />,
@@ -71,13 +72,13 @@ const adminLinks = [
 ];
 
 function AdminSidebar() {
-  const [openDropdown, setOpenDropdown] = useState(null);
-
+  const [openDropdown, setOpenDropdown] = useState(null); 
+  const { logout } = useAuth();
   return (
-    <div className="w-64 h-screen dark:text-white p-5 dark:bg-white/10 backdrop-blur-md border-r-transparent rounded-tl-lg rounded-bl-lg">
+    <div className="w-64 h-screen dark:text-white p-10 dark:bg-white/10 backdrop-blur-md border-r-transparent rounded-tl-lg rounded-bl-lg ">
 <div className="flex justify-between  ">
       <h1 className="text-2xl  font-bold mb-8">Admin</h1>
-<Backbtn />
+
 </div>
 
       <ul className="space-y-3 ">
@@ -139,6 +140,9 @@ function AdminSidebar() {
           </li>
         ))}
       </ul>
+      <button onClick={logout} className="w-full mt-4   text-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold text-red-500 transition hover:bg-red-50/20 border border-red-500 hover:border-red-600"> 
+Logout
+      </button>
     </div>
   );
 }

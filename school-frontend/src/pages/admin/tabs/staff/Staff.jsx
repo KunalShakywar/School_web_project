@@ -1,30 +1,90 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import axios from "axios";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import * as XLSX from "xlsx";
 import Table from "../../../../components/table/Table";
 import { FaEdit, FaFileExcel, FaFilePdf, FaPlus, FaTrash } from "react-icons/fa";
 import StaffFormModal from "./StaffFormModal.jsx";
-import { initialStaff, initialStaffForm } from "./staffData.jsx";
+import { initialStaffForm } from "./staffData.jsx";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+function normalizeStaff(item = {}) {
+  return {
+    id: item._id || item.id,
+    name: item.name || "Unknown Staff",
+    role: item.role || "Staff",
+    qualification: item.qualification || "",
+    email: item.email || "",
+    phone: item.phone || "",
+    photo: item.photo || "https://via.placeholder.com/150?text=Staff",
+    department: item.department || item.role || "",
+  };
+}
 
 function Staff() {
-  const [staff, setStaff] = useState(initialStaff);
+  const [staff, setStaff] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState("");
   const [preview, setPreview] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [form, setForm] = useState(initialStaffForm);
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadStaff = async () => {
+      setLoading(true);
+
+      try {
+        const response = await axios.get(`${API_BASE_URL}/api/staff`);
+        if (cancelled) return;
+
+        const list = Array.isArray(response.data?.data) ? response.data.data : [];
+        setStaff(list.map(normalizeStaff));
+        setFetchError("");
+      } catch (error) {
+        if (cancelled) return;
+        console.error("Failed to fetch staff", error);
+        setStaff([]);
+        setFetchError("Unable to load staff records.");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    loadStaff();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const refreshStaff = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/staff`);
+      const list = Array.isArray(response.data?.data) ? response.data.data : [];
+      setStaff(list.map(normalizeStaff));
+      setFetchError("");
+    } catch (error) {
+      console.error("Failed to refresh staff", error);
+      setFetchError("Unable to load staff records.");
+    }
+  };
 
   const filteredStaff = useMemo(
     () =>
       staff.filter((item) => {
         const query = search.toLowerCase();
         return (
-          item.name.toLowerCase().includes(query) ||
-          item.role.toLowerCase().includes(query) ||
-          item.email.toLowerCase().includes(query) ||
-          item.qualification.toLowerCase().includes(query)
+          String(item.name || "").toLowerCase().includes(query) ||
+          String(item.role || "").toLowerCase().includes(query) ||
+          String(item.email || "").toLowerCase().includes(query) ||
+          String(item.qualification || "").toLowerCase().includes(query)
         );
       }),
     [search, staff]
@@ -48,33 +108,43 @@ function Staff() {
     setForm(initialStaffForm);
   };
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
 
-    if (editingId) {
-      setStaff((prev) =>
-        prev.map((item) =>
-          item.id === editingId ? { ...item, ...form, photo: form.photo || item.photo } : item
-        )
-      );
-      closeModal();
-      return;
-    }
+    const payload = {
+      name: form.name,
+      role: form.role,
+      qualification: form.qualification,
+      email: form.email,
+      phone: form.phone,
+      photo: form.photo,
+      department: form.department || form.role,
+    };
 
-    setStaff((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        ...form,
-        photo: form.photo || "https://i.pravatar.cc/150",
-      },
-    ]);
-    closeModal();
+    try {
+      if (editingId) {
+        await axios.put(`${API_BASE_URL}/api/staff/${editingId}`, payload);
+      } else {
+        await axios.post(`${API_BASE_URL}/api/staff`, payload);
+      }
+
+      await refreshStaff();
+      closeModal();
+    } catch (error) {
+      console.error("Failed to save staff", error);
+      alert(error.response?.data?.message || "Unable to save staff");
+    }
   };
 
-  const deleteStaff = (id) => {
-    if (window.confirm("Delete this staff member?")) {
-      setStaff((prev) => prev.filter((item) => item.id !== id));
+  const deleteStaff = async (id) => {
+    if (!window.confirm("Delete this staff member?")) return;
+
+    try {
+      await axios.delete(`${API_BASE_URL}/api/staff/${id}`);
+      await refreshStaff();
+    } catch (error) {
+      console.error("Failed to delete staff", error);
+      alert(error.response?.data?.message || "Unable to delete staff");
     }
   };
 
@@ -104,7 +174,9 @@ function Staff() {
     <div className="p-6">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-      
+          <p className="text-sm text-slate-500">
+            {loading ? "Loading staff..." : fetchError || `Showing ${filteredStaff.length} record${filteredStaff.length === 1 ? "" : "s"}`}
+          </p>
         </div>
 
         <button
@@ -141,6 +213,12 @@ function Staff() {
         </button>
       </div>
 
+      {fetchError && !loading ? (
+        <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {fetchError}
+        </div>
+      ) : null}
+
       <Table
         title="Staff"
         subtitle={`Showing ${filteredStaff.length} record${filteredStaff.length === 1 ? "" : "s"}`}
@@ -149,7 +227,7 @@ function Staff() {
         onSearchChange={setSearch}
         searchPlaceholder="Search staff..."
         rowsPerPage={rowsPerPage}
-        data={staff}
+        data={filteredStaff}
         columns={[
           {
             key: "photo",

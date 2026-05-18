@@ -9,7 +9,9 @@ import SchoolBackground from "./components/SchoolBackground"
 import Navbar from './components/layout/Navbar'
 import FloatingWhatsapp from './components/flotingBtn/FloatingWhatsapp'
 import ScrollingSmooth from "./components/scrollpage/ScrollingSmooth"
-import Footer from "./components/layout/Footer"
+import PageWrapper from "./components/layout/PageWrapper"
+import AppToastHost from "./components/notifications/AppToastHost"
+import RealtimeToastBridge from "./components/notifications/RealtimeToastBridge"
 
 // Public pages
 import Home from "./pages/home/Home"
@@ -22,8 +24,8 @@ import Teacher from "./pages/teacher/Teachers"
 import Staff from "./pages/staff/Staff"
 import NotFound from "./pages/NotFound"
 
-// Academic pages
-import Curriculum from './pages/academics/Curriculum'
+// Accdemics from HOME
+import Curriculum from "./pages/academics/CurriculumHome/index"
 import Calender from "./pages/academics/Academic_calendar"
 import Results from "./pages/academics/Results"
 import TimeTable from './pages/academics/Timetable'
@@ -44,7 +46,6 @@ import Attendance from "./pages/admin/tabs/attendance/Attendance"
 import Marks from "./pages/admin/tabs/marks/Marks"
 import Settings from "./pages/admin/tabs/Settings"
 import Announcements from "./pages/admin/tabs/announcements/Announcements"
-import AdminCurriculum from "./pages/admin/tabs/Academics/Curriculum"
 
 // Auth
 import Login from "./pages/auth/Login"
@@ -66,6 +67,7 @@ function Layout() {
   const { isLoggedIn, authLoading } = useAuth();
   const isAdminPage = location.pathname.startsWith("/dashboard");
   const showGuestWidgets = !authLoading && !isAdminPage && !isLoggedIn;
+  const [isFloatingVisible, setIsFloatingVisible] = useState(true);
   const [isPageVisible, setIsPageVisible] = useState(true);
   const getSystemTheme = () =>
     window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -112,13 +114,27 @@ function Layout() {
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [theme]);
 
+  useEffect(() => {
+    const handleNavbarOverlayChange = (event) => {
+      const isOpen = Boolean(event.detail?.open);
+      setIsFloatingVisible(!isOpen);
+    };
+
+    window.addEventListener("navbar-overlay-change", handleNavbarOverlayChange);
+    return () =>
+      window.removeEventListener("navbar-overlay-change", handleNavbarOverlayChange);
+  }, []);
+
   return (
     <div className="app-shell">
       <SchoolBackground />
       {!isAdminPage && <Navbar theme={theme} setTheme={setTheme} />}
+      <AppToastHost />
+      <RealtimeToastBridge />
 
       <main className={`app-main ${isPageVisible ? "app-main--visible" : "app-main--hidden"}`}>
-        <Routes>
+        <PageWrapper className="w-full" contentClassName="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+          <Routes>
 
           {/* ── Public Routes ── */}
           <Route path="/"           element={<Home />} />
@@ -131,7 +147,7 @@ function Layout() {
           <Route path="/staff"      element={<Staff />} />
 
           {/* ── Academic Routes ── */}
-          <Route path="/curriculum"          element={<Curriculum />} />
+          <Route path="/curriculum"          element={<Curriculum/>} />
           <Route path="/calender"            element={<Calender />} />
           <Route path="/results"             element={<Results />} />
           <Route path="/timetable"           element={<TimeTable />} />
@@ -172,7 +188,6 @@ function Layout() {
             <Route path="attendance" element={<Attendance />} />
             <Route path="marks"      element={<Marks />} />
             <Route path="announcements" element={<Announcements />} />
-            <Route path="curriculum" element={<AdminCurriculum />} />
             <Route path="settings"   element={<Settings />} />
             <Route path="staff"      element={<AdminStaff />} />
             </Route>
@@ -181,10 +196,10 @@ function Layout() {
           {/* ── 404 ── */}
           <Route path="*" element={<NotFound />} />
 
-        </Routes>
+          </Routes>
+        </PageWrapper>
       </main>
-      {showGuestWidgets && <FloatingWhatsapp />}
-      {showGuestWidgets && <Footer />}
+      {showGuestWidgets && isFloatingVisible && <FloatingWhatsapp />}
     </div>
   );
 }

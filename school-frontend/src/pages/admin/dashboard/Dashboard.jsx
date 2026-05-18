@@ -19,7 +19,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="space-y-5 text-gray-800 sm:p-5 lg:p-6 dark:text-gray-100">
+    <div >
       <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
         <div className="-mx-1 overflow-x-auto pb-1 px-1">
           <TabsList className="inline-flex min-w-full gap-1 rounded-2xl border border-slate-200 bg-white/70 p-1 shadow-sm backdrop-blur sm:min-w-max dark:border-gray-700 dark:bg-white/10">

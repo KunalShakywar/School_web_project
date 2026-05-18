@@ -1,26 +1,26 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../pages/auth/context/AuthContext";
 
 const NavbarMobileAuthMenu = ({
   visibleLoginLinks,
   token,
-  onLogout,
   setIsMobileOpen,
   setIsMenuOpen,
 }) => {
+  const { logout } = useAuth();
+
   return (
-    
-    
-    <div className="mb-4 rounded-xl border border-yellow-200 border-spacing-2 bg-white p-3 shadow-sm">
-      <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+    <div className="mb-4 rounded-2xl border border-white/15 bg-blue-950/95 p-3 shadow-sm backdrop-blur-sm">
+      <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/55">
         Account
       </p>
 
-      <div className=" flex border border-spacing-0 shadow-sm flex-row flex-wrap items-center gap-2 justify-between bg-slate-500/20 p-2 rounded-lg">
+      <div className="flex flex-row flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-white/5 p-2 shadow-sm">
         {visibleLoginLinks.map((link) => (
           <Link
             key={link.path || link.name}
             to={link.path}
-            className="flex items-center  gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-blue-600 "
+            className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-white/85 transition hover:bg-white/10 hover:text-white"
             onClick={() => {
               setIsMobileOpen(false);
               setIsMenuOpen(false);
@@ -34,12 +34,8 @@ const NavbarMobileAuthMenu = ({
         {token && (
           <button
             type="button"
-            onClick={() => {
-              onLogout();
-              setIsMobileOpen(false);
-              setIsMenuOpen(false);
-            }}
-            className=" w-fit text-center gap-2 rounded-lg px-2 py-1 text-sm font-semibold text-red-500 transition hover:bg-red-50/20 border border-red-500 hover:border-red-600"
+            onClick={logout}
+            className="w-fit rounded-lg border border-red-300/30 px-3 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/10"
           >
             Logout
           </button>

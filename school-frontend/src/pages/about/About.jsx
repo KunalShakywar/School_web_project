@@ -1,5 +1,6 @@
 import React from "react";
 import "../../styles/pages/about.css";
+import Footer from "../../components/layout/Footer";
 
 const About = () => {
   return (
@@ -10,6 +11,8 @@ const About = () => {
           We focus on academic excellence, character building, and student growth.
         </p>
       </section>
+
+      <Footer />
     </div>
   );
 };

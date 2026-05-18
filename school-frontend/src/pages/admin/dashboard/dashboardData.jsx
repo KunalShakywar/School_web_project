@@ -59,13 +59,6 @@ export const quickActions = [
     icon: FiBriefcase,
     className: "bg-violet-600 hover:bg-violet-700",
   },
-  {
-    label: "Curriculum",
-    href: "/dashboard/curriculum",
-    icon: FiBookOpen,
-    className: "bg-slate-700 hover:bg-slate-800",
-  },
-  
 ];
 
 export const activityItems = [

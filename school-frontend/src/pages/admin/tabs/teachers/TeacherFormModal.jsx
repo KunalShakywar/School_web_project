@@ -7,6 +7,7 @@ function TeacherFormModal({
   onSubmit,
 }) {
   if (!open) return null;
+  
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6">
@@ -56,6 +57,28 @@ function TeacherFormModal({
               value={form.qualification}
               onChange={(e) => setForm({ ...form, qualification: e.target.value })}
               placeholder="e.g. B.Ed"
+              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-slate-800 dark:border-gray-700"
+            />
+          </label>
+
+          <label className="space-y-1 text-sm text-gray-700 dark:text-gray-200">
+            Class Name
+            <input
+              type="text"
+              value={form.className}
+              onChange={(e) => setForm({ ...form, className: e.target.value })}
+              placeholder="e.g. 10th A"
+              className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-slate-800 dark:border-gray-700"
+            />
+          </label>
+
+          <label className="space-y-1 text-sm text-gray-700 dark:text-gray-200">
+            Experience
+            <input
+              type="text"
+              value={form.experience}
+              onChange={(e) => setForm({ ...form, experience: e.target.value })}
+              placeholder="e.g. 5 years"
               className="w-full rounded border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:bg-slate-800 dark:border-gray-700"
             />
           </label>

@@ -2,19 +2,43 @@ import ProfileImage from "../../components/ProfileImage";
 import { Link } from "react-router-dom";
 import { SiGoogleclassroom } from "react-icons/si";
 
-const TeacherProfileCard = ({ profile, teacherId }) => {
+const TeacherProfileCard = ({ profile }) => {
+  const normalizeText = (value) => {
+    if (Array.isArray(value)) {
+      return value
+        .map((item) => {
+          if (!item) return "";
+          if (typeof item === "object") {
+            return String(item.name || item.title || item.subject || item._id || "").trim();
+          }
+          return String(item).trim();
+        })
+        .filter(Boolean)
+        .join(", ");
+    }
+
+    if (typeof value === "string") {
+      return value.trim();
+    }
+
+    if (value && typeof value === "object") {
+      return String(value.name || value.title || value.subject || value._id || "").trim();
+    }
+
+    return "";
+  };
+
   const teacherRole = profile.role || "Teacher";
-  const teacherSubject = profile.subject || profile.department || "N/A";
-  const teacherClass = profile.className || profile.classTeacher || "N/A";
+  const teacherSubject = normalizeText(profile.subject) || profile.department || "N/A";
+  const teacherClass =
+    profile.className || profile.classTeacher || "N/A";
   const teacherEmail = profile.email || "No email available";
   const teacherAttendanceRate = profile.attendanceRate ?? 0;
-  const teacherProgressRate = profile.progressRate ?? 0;
-  const displayId = profile.employeeId || profile.rollNumber || teacherId || "N/A";
   const avatarSrc =
     profile.image ||
     profile.avatar ||
     `https://ui-avatars.com/api/?name=${encodeURIComponent(
-      profile.name || "Teacher"
+      profile.name || "Teacher",
     )}&background=random`;
 
   return (
@@ -25,17 +49,19 @@ const TeacherProfileCard = ({ profile, teacherId }) => {
             <ProfileImage
               src={avatarSrc}
               alt={profile.name || "Teacher"}
-              className="h-14 w-14 shrink-0 rounded-full border-2 border-blue-100 object-cover"
+              className="h-14 w-14 shrink-0 rounded-full border-2 border-blue-100 object-cover "
             />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-slate-900">
+              <p className="truncate text-sm font-medium text-slate-900 first-letter:uppercase">
                 {profile.name || "Teacher"}
               </p>
               <p className="mt-0.5 text-xs text-slate-500">
                 Role: {teacherRole}
               </p>
-              <p className="text-xs text-slate-400">Subject: {teacherSubject}</p>
-              <p className="truncate text-xs text-slate-400">{teacherEmail}</p>
+              <p className="text-xs text-slate-400">
+                Subject: {teacherSubject}
+              </p>
+            
             </div>
             <span className="shrink-0 self-start rounded-full   border border-green-400 bg-green-800/40 px-2.5 py-1 text-xs font-medium text-green-500">
               Active
@@ -60,29 +86,40 @@ const TeacherProfileCard = ({ profile, teacherId }) => {
               </div>
               <p className="mt-1.5 text-xs text-slate-400">Attendance rate</p>
             </div>
-{/* Special option only teacher wait for implementaion*/}
-            <div className="rounded-xl border border-transparent bg-slate-50 p-3.5">
-              <p className="mb-1 text-xs uppercase tracking-wide text-slate-400">
-                Classroom
-              </p>
-            
-                <Link
-                  to="/teacher/teacherspecial"
-                  className="text-blue-700 transition hover:text-blue-800"
-                >
-             <SiGoogleclassroom size={40} />
-                </Link>
-         
-            </div>
+            {/* Special option only teacher wait for implementaion*/}
+         <div className="relative rounded-xl border border-transparent bg-slate-50 p-3.5 overflow-hidden">
+  
+  {/* Watermark Icon */}
+  <SiGoogleclassroom 
+    size={80} 
+    className="absolute right-2 bottom-2 opacity-10 pointer-events-none"
+  />
+
+  <p className="mb-1 text-xs uppercase tracking-wide text-slate-400">
+    Classroom
+  </p>
+
+  <Link
+    to="/teacher/teacherspecial"
+    className="text-blue-700 transition hover:text-blue-800"
+  >
+     <SiGoogleclassroom 
+    size={40} 
+  />
+  </Link>
+
+</div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 px-5 pb-4">
+          <div className="grid grid-cols-2  gap-2 px-5 pb-4">
             {[
               { val: teacherSubject, lbl: "Subject" },
               { val: teacherClass, lbl: "Class" },
-              { val: profile.department || "N/A", lbl: "Dept" },
             ].map(({ val, lbl }) => (
-              <div key={lbl} className="rounded-xl bg-slate-50 px-2 py-3 text-center">
+              <div
+                key={lbl}
+                className="rounded-xl bg-slate-50 px-2 py-3 text-center"
+              >
                 <p className="truncate text-sm font-medium text-slate-800">
                   {val}
                 </p>
@@ -92,7 +129,7 @@ const TeacherProfileCard = ({ profile, teacherId }) => {
           </div>
 
           <div className="flex items-center justify-between border-t border-slate-100 px-5 py-3">
-            <span className="text-xs text-slate-400">ID: {teacherEmail}</span>
+            <span className="text-xs text-white border p-0.5 rounded px-2 bg-cyan-50/20">{teacherRole} ID : {teacherEmail}</span>
             <div className="flex gap-1.5">
               <div className="h-1.5 w-1.5 rounded-full bg-blue-500" />
               <div className="h-1.5 w-1.5 rounded-full bg-green-500" />

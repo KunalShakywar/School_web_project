@@ -7,16 +7,16 @@ const NavbarDesktopLinks = ({ links, currentPath }) => {
         <li key={link.path || link.name} className="relative group flex">
           {link.dropdown ? (
             <>
-              <button className="flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-slate-700 hover:text-blue-600">
+              <button className="flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold text-white/90 hover:text-white">
                 {link.icon && <link.icon size={18} />}
                 {link.name} ▾
               </button>
-              <ul className="absolute left-0 mt-10 w-56 rounded-xl border border-slate-200 bg-white backdrop-blur-md p-2 shadow-lg opacity-0 invisible transition-all duration-200 group-hover:visible group-hover:opacity-100">
+              <ul className="absolute left-0 mt-10 w-56 rounded-xl border border-white/15 bg-blue-950/95 backdrop-blur-md p-2 shadow-lg opacity-0 invisible transition-all duration-200 group-hover:visible group-hover:opacity-100">
                 {link.dropdown.map((item) => (
                   <li key={item.path}>
                     <Link
                       to={item.path}
-                      className="block rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-blue-600"
+                      className="block rounded-lg px-3 py-2 text-sm font-semibold text-white/85 hover:bg-white/10 hover:text-white"
                     >
                       {item.name}
                     </Link>
@@ -27,10 +27,10 @@ const NavbarDesktopLinks = ({ links, currentPath }) => {
           ) : (
             <Link
               to={link.path}
-              className={`flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold transition-all hover:text-blue-600 ${
+              className={`flex items-center gap-1 rounded-full px-2 py-1 text-sm font-semibold transition-all hover:text-white ${
                 currentPath === link.path
-                  ? "bg-blue-50 text-blue-600 shadow-sm"
-                  : "text-slate-700"
+                  ? "bg-white/15 text-white shadow-sm"
+                  : "text-white/85 hover:text-white"
               }`}
             >
               {link.icon && <link.icon size={18} />}

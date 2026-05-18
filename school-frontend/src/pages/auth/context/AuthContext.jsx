@@ -9,6 +9,9 @@ const getWebSocketUrl = () => {
   return wsEnvUrl || null;
 };
 
+const AUTH_SYNC_KEY = "auth-sync";
+const AUTH_LOGOUT_EVENT = "logout";
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
@@ -41,6 +44,10 @@ export const AuthProvider = ({ children }) => {
     clearToken();
     localStorage.removeItem("user");
     setLiveData({ attendance: null, progress: null });
+    localStorage.setItem(
+      AUTH_SYNC_KEY,
+      JSON.stringify({ type: AUTH_LOGOUT_EVENT, timestamp: Date.now() })
+    );
   };
 
   useEffect(() => {
@@ -87,6 +94,31 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key !== AUTH_SYNC_KEY || !event.newValue) return;
+
+      try {
+        const parsed = JSON.parse(event.newValue);
+        if (parsed.type !== AUTH_LOGOUT_EVENT) return;
+
+        setUser(null);
+        setRole(null);
+        clearToken();
+        localStorage.removeItem("user");
+        setLiveData({ attendance: null, progress: null });
+        if (window.location.pathname !== "/login") {
+          window.location.replace("/login");
+        }
+      } catch (error) {
+        console.error("Auth sync parse error:", error);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  useEffect(() => {
     if (!user?._id) return;
     const wsUrl = getWebSocketUrl();
     if (!wsUrl) return;
@@ -118,6 +150,7 @@ export const AuthProvider = ({ children }) => {
     };
   }, [user?._id]);
 
+  //Context call anywhere in components / modules
   return (
     <AuthContext.Provider
       value={{

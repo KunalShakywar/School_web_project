@@ -15,7 +15,7 @@ export const NAV_LINKS = [
     name: "Academics",
     icon: HiOutlineAcademicCap,
     dropdown: [
-      { name: "Curriculum", path: "/curriculum" },
+      {name: "Curriculum", path: "/curriculum"},
       { name: "Academic Calendar", path: "/calender" },
       { name: "Examinations", path: "/examination" },
       { name: "Results", path: "/results" },

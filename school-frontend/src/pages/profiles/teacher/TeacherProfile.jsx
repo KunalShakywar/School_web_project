@@ -57,6 +57,7 @@ const TeacherProfile = () => {
   }, [requestUrl]);
 
   if (!requestUrl) {
+    // UI 
     return (
       <TeacherProfileError
         title="Teacher Profile Unavailable"
@@ -82,6 +83,7 @@ const TeacherProfile = () => {
     <TeacherProfileCard
       profile={profile}
       teacherId={id || profile?._id}
+
     />
   );
 };
